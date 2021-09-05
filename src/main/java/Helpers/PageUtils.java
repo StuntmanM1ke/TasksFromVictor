@@ -35,6 +35,19 @@ public class PageUtils {
         }
         return true;
     }
+    private static void waitUntilElementTextContains(WebElement element, String text) {
+        new WebDriverWait(WebDriverManager.getCurrentDriver(), Constants.DEFAULT_TIMEOUT)
+                .until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+
+    public static boolean isElementTextContains(WebElement element, String text) {
+        try {
+            waitUntilElementTextContains(element, text);
+        } catch (TimeoutException e) {
+            return false;
+        }
+        return true;
+    }
 
     public static boolean isElementNotExist(WebElement element) {
         int timer = 0;

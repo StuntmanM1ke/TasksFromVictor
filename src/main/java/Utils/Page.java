@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.lang.reflect.Field;
 
 public interface Page {
-    public boolean isPageLoaded();
+    public boolean isPageLoaded() throws InterruptedException;
 
     default void initPage() {
         WebDriver driver = WebDriverManager.getCurrentDriver();
@@ -19,7 +19,7 @@ public interface Page {
             if (!isPageLoaded()) {
                 throw new RuntimeException("Страница " + this.getClass().getSimpleName() + " не загружена");
             }
-        } catch (WebDriverException e) {
+        } catch (WebDriverException | InterruptedException e) {
             CustomUtils.getScreen(driver);
             throw new RuntimeException("Ошибка при загрузки страницы " + this.getClass().getSimpleName() + "\n" + e.toString());
         }

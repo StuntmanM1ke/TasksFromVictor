@@ -1,7 +1,9 @@
 package ru.yandex;
 
+import Driver.WebDriverManager;
 import Helpers.Constants;
-import io.github.bonigarcia.wdm.WebDriverManager;
+
+import Steps.Steps;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +16,7 @@ public class BaseTest {
 
     @BeforeEach
     public void beforeEach() {
-        WebDriverManager.in
+        WebDriverManager.initChrome();
         chromeDriver = WebDriverManager.getCurrentDriver();
         chromeDriver.manage().window().maximize();
         chromeDriver.manage().timeouts().implicitlyWait(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -23,7 +25,7 @@ public class BaseTest {
 
     @AfterEach
     public void afterEach() {
-        //  WebDriverManager.quitCurrentDriver();
+     //     WebDriverManager.quitCurrentDriver();
     }
 }
-}
+
