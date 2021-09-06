@@ -1,60 +1,50 @@
 package Pages;
 
-import Driver.WebDriverManager;
 import Helpers.PageUtils;
 import Utils.ExchangePage;
-import Utils.Page;
 import data.Currency;
 import data.OperationType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class SberPage implements ExchangePage {
-    @FindBy(xpath = "//table[@class = 'rates-table-component']//tbody//tr[2]/td[2]")
+public class VTBPage implements ExchangePage {
+    @FindBy(xpath = "//span[@id='select2-method-container']")
     private WebElement pageLoadSign;
 
-
-    @FindBy(xpath = "//table[@class = 'rates-table-component']")
+    @FindBy(xpath = "//div[@class='base-table__inner']")
     private WebElement courseTable;
 
 
-    public SberPage() {
+    public VTBPage() {
         initPage();
     }
-
-
-    @Override
-    public boolean isPageLoaded() {
-        return PageUtils.isElementTextContains(pageLoadSign, "от 1");
-    }
-
 
     public static String getMainURL() {
         return mainURL;
     }
 
-    private static String mainURL = "https://www.sberbank.ru/ru/quotes/currencies";
+    private static String mainURL = "https://www.vtb.ru/personal/platezhi-i-perevody/obmen-valjuty/";
 
     @Override
     public double getCourseDouble(OperationType operationType, Currency currency) {
         String xPath;
         if (operationType == OperationType.SELL) {
             if (currency == Currency.USD) {
-                xPath = "//tbody//tr[2]/td[3]";
-            } else xPath = "//tbody//tr[7]/td[3]";
+                xPath = "//tbody//tr[2]/td[2]";
+            } else xPath = "//tbody//tr[3]/td[2]";
         } else {
             if (currency == Currency.USD) {
-                xPath = "//tbody//tr[2]/td[4]";
-            } else xPath = "//tbody//tr[7]/td[4]";
+                xPath = "//tbody//tr[2]/td[3]";
+            } else xPath = "//tbody//tr[3]/td[3]";
         }
         WebElement element = courseTable.findElement(By.xpath(xPath));
         String currentValue = element.getText();
         return Double.parseDouble(currentValue.replaceAll(",", "."));
+    }
+
+    @Override
+    public boolean isPageLoaded()  {
+        return PageUtils.isElementTextContains(pageLoadSign, "В офисе (наличные)");
     }
 }

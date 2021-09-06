@@ -1,5 +1,6 @@
 package Pages;
 
+import Helpers.PageUtils;
 import Utils.ExchangePage;
 import Utils.FieldName;
 import Utils.Page;
@@ -18,6 +19,9 @@ import java.util.Map;
 
 public class OpenPage implements ExchangePage {
 
+    @FindBy(xpath = "//span[contains(text(),'Банк покупает')]")
+    private WebElement pageLoadSign;
+
     @FieldName("Курс обмена")
     @FindBy(xpath = "//*[@class='main-page-exchange main-page-info__card']")
     private WebElement exchangeRates;
@@ -34,6 +38,7 @@ public class OpenPage implements ExchangePage {
 
     public OpenPage() {
         initPage();
+        getCollectERates();
     }
 
     public List<Map<String, String>> getCollectERates() {
@@ -53,7 +58,7 @@ public class OpenPage implements ExchangePage {
 
     @Override
     public boolean isPageLoaded() {
-        return true;
+        return PageUtils.isElementTextContains(pageLoadSign, "Банк покупает");
     }
 
     public static String getMainURL() {
@@ -68,21 +73,21 @@ public class OpenPage implements ExchangePage {
                        collectERates.stream()
                                .filter(x->x.get("Валюта обмена").contains("USD"))
                                .findFirst()
-                               .get().get("Банк продает").replace(",","."));
+                               .get().get("Банк покупает").replace(",","."));
             } else return Double.parseDouble(collectERates.stream()
                     .filter(x->x.get("Валюта обмена").contains("EUR"))
                     .findFirst()
-                    .get().get("Банк продает").replace(",","."));
+                    .get().get("Банк покупает").replace(",","."));
         } else {
             if (currency == Currency.USD) {
                 return Double.parseDouble(collectERates.stream()
                         .filter(x->x.get("Валюта обмена").contains("USD"))
                         .findFirst()
-                        .get().get("Банк покупает").replace(",","."));
+                        .get().get("Банк продает").replace(",","."));
             } else return Double.parseDouble(collectERates.stream()
                     .filter(x->x.get("Валюта обмена").contains("EUR"))
                     .findFirst()
-                    .get().get("Банк покупает").replace(",","."));
+                    .get().get("Банк продает").replace(",","."));
         }
     }
 }
