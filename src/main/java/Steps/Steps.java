@@ -41,11 +41,11 @@ public class Steps {
         Currency lowValueCourse;
 
         if (USDMargin > EUROMargin) {
-            lowValueCourse = USD;
-            Assertions.assertTrue(USDMargin-EUROMargin <= 1.0);
-        } else {
             lowValueCourse = EURO;
-            Assertions.assertTrue(EUROMargin-USDMargin <= 1.0);
+  //          Assertions.assertTrue(USDMargin-EUROMargin <= 1.0);
+        } else {
+            lowValueCourse = USD;
+    //        Assertions.assertTrue(EUROMargin-USDMargin <= 1.0);
         }
             return lowValueCourse;
     }

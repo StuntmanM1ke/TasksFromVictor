@@ -54,8 +54,8 @@ public class TinkoffPage implements ExchangePage {
         } else {
             xPath = "//div[@class='d2KQOa h2KQOa' and @style='padding: 16px 32px 16px 0px;']";
         }
-        List<WebElement> euroBuys = WebDriverManager.getCurrentDriver().findElements(By.xpath(xPath));
-        String currentValue = euroBuys.get(0).getText();
+        List<WebElement> elements = WebDriverManager.getCurrentDriver().findElements(By.xpath(xPath));
+        String currentValue = elements.get(0).getText();
 
         return Double.parseDouble(currentValue.replaceAll(",", ".").trim());
     }

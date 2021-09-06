@@ -1,10 +1,12 @@
 package Pages;
 
+import Driver.WebDriverManager;
 import Helpers.PageUtils;
 import Utils.ExchangePage;
 import Utils.Page;
 import data.Currency;
 import data.OperationType;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,15 +19,14 @@ public class SberPage implements ExchangePage {
     @FindBy(xpath = "//table[@class = 'rates-table-component']//tbody//tr[2]/td[2]")
     private WebElement pageLoadSign;
 
-    @FindBy(xpath = "//table[@class = 'rates-table-component']//tbody//tr[2]/td[3]")
-    private WebElement pageTestSign;
 
-    List<Map<String, String>> collectERates = new ArrayList<>();
+    @FindBy(xpath = "//table[@class = 'rates-table-component']")
+    private WebElement courseTable;
 
 
     public SberPage() {
-            initPage();
-        }
+        initPage();
+    }
 
 
     @Override
@@ -42,6 +43,18 @@ public class SberPage implements ExchangePage {
 
     @Override
     public double getCourseDouble(OperationType operationType, Currency currency) {
-        return 0;
+        String xPath;
+        if (operationType == OperationType.SELL) {
+            if (currency == Currency.USD) {
+                xPath = "//tbody//tr[2]/td[3]";
+            } else xPath = "//tbody//tr[7]/td[3]";
+        } else {
+            if (currency == Currency.USD) {
+                xPath = "//tbody//tr[2]/td[4]";
+            } else xPath = "//tbody//tr[7]/td[4]";
+        }
+       WebElement element = courseTable.findElement(By.xpath(xPath));
+        String currentValue = element.getText();
+        return Double.parseDouble(currentValue.replaceAll(",", "."));
     }
 }

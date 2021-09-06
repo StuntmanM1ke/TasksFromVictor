@@ -1,5 +1,7 @@
 package ru.yandex;
 
+import Pages.OpenPage;
+import Pages.SberPage;
 import Pages.TinkoffPage;
 import Pages.YandexPage;
 import data.Currency;
@@ -16,6 +18,23 @@ public class Tests extends BaseTest {
         double usdSELL = steps.getExchangeCourse(page, OperationType.SELL, Currency.USD);
         double euroBUY = steps.getExchangeCourse(page, OperationType.BUY, Currency.EURO);
         double euroSELL = steps.getExchangeCourse(page, OperationType.SELL, Currency.EURO);
-        System.out.println(steps.findLowest(usdBUY,usdSELL,euroBUY,euroSELL));
+        System.out.println(usdBUY);
+        System.out.println(usdBUY);
+        System.out.println(usdBUY);
+        System.out.println(usdBUY);
+        //System.out.println(steps.findLowest(usdBUY, usdSELL, euroBUY, euroSELL));
     }
+
+    @Test
+    public void test() {
+        steps.goPage(OpenPage.getMainURL());
+        OpenPage page = new OpenPage();
+        page.getCollectERates();
+        double usdBUY = steps.getExchangeCourse(page, OperationType.BUY, Currency.USD);
+        double usdSELL = steps.getExchangeCourse(page, OperationType.SELL, Currency.USD);
+        double euroBUY = steps.getExchangeCourse(page, OperationType.BUY, Currency.EURO);
+        double euroSELL = steps.getExchangeCourse(page, OperationType.SELL, Currency.EURO);
+        System.out.println(steps.findLowest(usdBUY, usdSELL, euroBUY, euroSELL));
+    }
+
 }

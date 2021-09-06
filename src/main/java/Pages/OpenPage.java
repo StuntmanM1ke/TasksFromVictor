@@ -1,9 +1,10 @@
-/*
 package Pages;
 
 import Utils.ExchangePage;
 import Utils.FieldName;
 import Utils.Page;
+import data.Currency;
+import data.OperationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,27 +26,14 @@ public class OpenPage implements ExchangePage {
     @FindAll(@FindBy(xpath = ".//tbody/tr[contains(@class,'row')]"))
     private List<WebElement> tableRows;
 
-    public WebDriver getWebDriver() {
-        return webDriver;
-    }
 
-
-    private WebDriver webDriver;
-
-    public WebElement getExchangeRates() {
-        return exchangeRates;
-    }
 
     List<Map<String, String>> collectERates = new ArrayList<>();
 
-    private String mainURL = "https://www.open.ru/";
+    private static String mainURL = "https://www.open.ru/";
 
-    public OpenPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        if (!webDriver.getTitle().contains("открытие")) {
-            webDriver.get(mainURL);
-            initPage();
-        }
+    public OpenPage() {
+        initPage();
     }
 
     public List<Map<String, String>> getCollectERates() {
@@ -62,19 +50,39 @@ public class OpenPage implements ExchangePage {
         return collectERates;
     }
 
-    @Override
-    public void preActions() {
-
-    }
-
-    @Override
-    public double getCourseDouble(String course) {
-        return Double.parseDouble(course.replaceAll(",",".").trim());
-    }
 
     @Override
     public boolean isPageLoaded() {
         return true;
     }
+
+    public static String getMainURL() {
+        return mainURL;
+    }
+
+    @Override
+    public double getCourseDouble(OperationType operationType, Currency currency) {
+        if (operationType == OperationType.SELL) {
+            if (currency == Currency.USD) {
+               return Double.parseDouble(
+                       collectERates.stream()
+                               .filter(x->x.get("Валюта обмена").contains("USD"))
+                               .findFirst()
+                               .get().get("Банк продает").replace(",","."));
+            } else return Double.parseDouble(collectERates.stream()
+                    .filter(x->x.get("Валюта обмена").contains("EUR"))
+                    .findFirst()
+                    .get().get("Банк продает").replace(",","."));
+        } else {
+            if (currency == Currency.USD) {
+                return Double.parseDouble(collectERates.stream()
+                        .filter(x->x.get("Валюта обмена").contains("USD"))
+                        .findFirst()
+                        .get().get("Банк покупает").replace(",","."));
+            } else return Double.parseDouble(collectERates.stream()
+                    .filter(x->x.get("Валюта обмена").contains("EUR"))
+                    .findFirst()
+                    .get().get("Банк покупает").replace(",","."));
+        }
+    }
 }
-*/
