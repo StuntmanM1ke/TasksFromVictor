@@ -38,6 +38,8 @@ public class TinkoffPage implements ExchangePage {
     @FieldName("Курс продажи доллара")
     private WebElement usdSell;
 
+    private static String mainURL = "https://www.tinkoff.ru/about/exchange/";
+
     public TinkoffPage() {
         initPage();
     }
@@ -69,5 +71,5 @@ public class TinkoffPage implements ExchangePage {
         return mainURL;
     }
 
-    private static String mainURL = "https://www.tinkoff.ru/about/exchange/";
+
 }

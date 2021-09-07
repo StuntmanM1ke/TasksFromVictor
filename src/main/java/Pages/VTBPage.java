@@ -15,6 +15,7 @@ public class VTBPage implements ExchangePage {
     @FindBy(xpath = "//div[@class='base-table__inner']")
     private WebElement courseTable;
 
+    private static String mainURL = "https://www.vtb.ru/personal/platezhi-i-perevody/obmen-valjuty/";
 
     public VTBPage() {
         initPage();
@@ -24,7 +25,7 @@ public class VTBPage implements ExchangePage {
         return mainURL;
     }
 
-    private static String mainURL = "https://www.vtb.ru/personal/platezhi-i-perevody/obmen-valjuty/";
+
 
     @Override
     public double getCourseDouble(OperationType operationType, Currency currency) {

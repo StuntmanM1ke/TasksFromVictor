@@ -23,6 +23,7 @@ public class SberPage implements ExchangePage {
     @FindBy(xpath = "//table[@class = 'rates-table-component']")
     private WebElement courseTable;
 
+    private static String mainURL = "https://www.sberbank.ru/ru/quotes/currencies";
 
     public SberPage() {
         initPage();
@@ -39,7 +40,6 @@ public class SberPage implements ExchangePage {
         return mainURL;
     }
 
-    private static String mainURL = "https://www.sberbank.ru/ru/quotes/currencies";
 
     @Override
     public double getCourseDouble(OperationType operationType, Currency currency) {

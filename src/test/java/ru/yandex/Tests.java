@@ -17,4 +17,11 @@ public class Tests extends BaseTest {
         double euroSELL = steps.getExchangeCourse(page, OperationType.SELL, Currency.EURO);
         System.out.println(steps.findLowest(usdBUY, usdSELL, euroBUY, euroSELL));
     }
+
+    @Test
+    public void yandexMarketCompare(){
+    steps.goPage(YandexMarketPage.getMainURL());
+    YandexMarketPage page = new YandexMarketPage();
+    steps.toVideoCards(page);
+    }
 }

@@ -1,5 +1,6 @@
 package Steps;
 
+import Pages.YandexMarketPage;
 import Utils.ExchangePage;
 import Utils.Page;
 import data.Currency;
@@ -28,25 +29,32 @@ public class Steps {
         page.getElement("Поле поиска").sendKeys(request);
         page.getElement("Кнопка поиска").click();
     }
-
+//    Задача 1
     @Step("Получить курс")
     public double getExchangeCourse(ExchangePage page, OperationType operationType, Currency moneyType) {
         return page.getCourseDouble(operationType, moneyType);
     }
 
     @Step("Определить наименее выгодный курс")
-    public Currency findLowest(double USDBuy, double USDSell, double EUROBuy, double EUROSell) {
-        double USDMargin = USDBuy - USDSell;
-        double EUROMargin = EUROBuy - EUROSell;
+    public Currency findLowest(Double usdBuy, Double usdSell, Double euroBuy, Double euroSell) {
+        Double usdMargin = usdBuy - usdSell;
+        Double euroMargin = euroBuy - euroSell;
         Currency lowValueCourse;
 
-        if (USDMargin > EUROMargin) {
+        if (usdMargin > euroMargin) {
             lowValueCourse = USD;
-            Assertions.assertTrue(USDMargin - EUROMargin <= 1.0);
+            Assertions.assertTrue(usdMargin - euroMargin <= 1.0);
         } else {
             lowValueCourse = EURO;
-            Assertions.assertTrue(EUROMargin - USDMargin <= 1.0);
+            Assertions.assertTrue(euroMargin - usdMargin <= 1.0);
         }
         return lowValueCourse;
     }
+
+   //Задача 2
+    @Step("Переход в раздел видеокарт")
+    public void toVideoCards(YandexMarketPage page){
+        page.goToVideoCards();
+    }
+
 }
