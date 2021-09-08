@@ -46,10 +46,11 @@ public class TinkoffPage implements ExchangePage {
 
 
     @Override
-    public double getCourseDouble(OperationType operationType, Currency currency) {
+    public double getCourseDouble(OperationType operationType, Currency currency) throws InterruptedException {
         switchers.get(1).click();
         WebElement choseUSD = WebDriverManager.getCurrentDriver().findElement(By.xpath("//div[contains(text(), '" + currency.getValue() + "')]"));
         choseUSD.click();
+        Thread.sleep(1000);
         String xPath;
         if (operationType == OperationType.BUY) {
             xPath = "//div[@style='padding: 8px 32px 16px 0px;']";
